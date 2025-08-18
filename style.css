@@ -1,6 +1,22 @@
-body { font-family: sans-serif; text-align: center; background:#f4e1c1; }
-button { padding:10px 20px; margin:10px; font-size:16px; cursor:pointer; }
-#board { margin:auto; border:5px solid #8b5a2b; background:#d2b48c; }
-td { width:50px; height:50px; text-align:center; vertical-align:middle; font-size:24px; }
-.red { color:red; font-weight:bold; }
-.black { color:black; font-weight:bold; }
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+    background-color: #f5f5f5;
+}
+
+button {
+    padding: 12px 25px;
+    margin: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
