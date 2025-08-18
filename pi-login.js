@@ -1,12 +1,19 @@
-// Pi login offline demo
-window.PiSDK = window.PiSDK || { signIn: async ()=>new Promise(r=>setTimeout(()=>r({username:'PiUserDemo'}),500)) };
+window.PiSDK = window.PiSDK || {
+    signIn: async function() {
+        return new Promise(resolve=>{
+            setTimeout(()=>resolve({username:'PiUserDemo'}),500);
+        });
+    }
+};
 
 async function signInWithPi(){
     try{
         const user = await PiSDK.signIn();
         localStorage.setItem('piUser', JSON.stringify(user));
         showMainMenu(user);
-    }catch(e){ alert("Đăng nhập thất bại: "+e.message);}
+    } catch(e) {
+        alert("Đăng nhập thất bại: "+e.message);
+    }
 }
 
 function showMainMenu(user){
@@ -21,17 +28,15 @@ window.addEventListener('load',()=>{
     if(user) showMainMenu(user);
 });
 
-// Cờ tướng nâng cao
+// ------------------- Cờ tướng --------------------
 const emptyRow = Array(9).fill(null);
 let board=[], selected=null, turn='r';
 let history=[], redoStack=[];
 
-// AI trọng số cơ bản
+// Trọng số quân cờ AI
 const pieceValue = {K:1000,A:2,B:2,R:5,N:5,C:4,P:1};
 
-const pieces = ['K','A','B','R','N','C','P'];
-const colors = ['r','b'];
-
+// Khởi tạo bàn cờ
 function initBoard(){
     turn='r'; selected=null; history=[]; redoStack=[];
     board = [
@@ -59,8 +64,7 @@ function renderBoard(){
             if(p){
                 const img = document.createElement('img');
                 img.src=`assets/pieces/${p}.png`;
-                img.style.width='50px';
-                img.style.height='50px';
+                img.style.width='50px'; img.style.height='50px';
                 td.appendChild(img);
             }
             td.dataset.row=r; td.dataset.col=c;
@@ -78,7 +82,7 @@ function renderBoard(){
 
 function highlightSelected(){
     document.querySelectorAll('#chessboard td').forEach(td=>{
-        td.style.backgroundColor = ((parseInt(td.dataset.row)+parseInt(td.dataset.col))%2===0)?'#f2d9b3':'#b58863';
+        td.style.backgroundColor=((parseInt(td.dataset.row)+parseInt(td.dataset.col))%2===0)?'#f2d9b3':'#b58863';
     });
     if(selected){
         const td=document.querySelector(`#chessboard td[data-row="${selected.r}"][data-col="${selected.c}"]`);
@@ -110,7 +114,7 @@ function cellClick(e){
     }
 }
 
-// AI thông minh: đánh theo trọng số quân cờ
+// AI thông minh: ăn quân giá trị cao
 function aiMove(){
     turn='b';
     const moves=[];
@@ -131,7 +135,7 @@ function aiMove(){
         }
     }
     if(moves.length){
-        moves.sort((a,b)=>b.score-a.score); // ưu tiên ăn quân giá trị cao
+        moves.sort((a,b)=>b.score-a.score);
         const m=moves[0];
         board[m.to[0]][m.to[1]]=board[m.from[0]][m.from[1]];
         board[m.from[0]][m.from[1]]=null;
@@ -141,6 +145,6 @@ function aiMove(){
     turn='r';
 }
 
+// Undo / Redo
 function undo(){ if(history.length){redoStack.push(JSON.parse(JSON.stringify(board)));board=history.pop();renderBoard();} }
 function redo(){ if(redoStack.length){history.push(JSON.parse(JSON.stringify(board)));board=redoStack.pop();renderBoard();} }
-

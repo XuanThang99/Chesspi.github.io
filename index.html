@@ -26,15 +26,17 @@
 </div>
 
 <script>
-document.getElementById('loginBtn').onclick=signInWithPi;
-document.getElementById('offlineBtn').onclick=function(){
-    document.getElementById('game-container').style.display='block';
-    initBoard();
-};
-document.getElementById('onlineBtn').onclick=function(){alert('Online sẽ cập nhật sau!')};
-document.getElementById('historyBtn').onclick=function(){alert('Lịch sử sẽ cập nhật sau!')};
-document.getElementById('undoBtn').onclick=undo;
-document.getElementById('redoBtn').onclick=redo;
+document.addEventListener('DOMContentLoaded', function(){
+    document.getElementById('loginBtn').onclick=signInWithPi;
+    document.getElementById('offlineBtn').onclick=function(){
+        document.getElementById('game-container').style.display='block';
+        initBoard();
+    };
+    document.getElementById('onlineBtn').onclick=function(){alert('Online sẽ cập nhật sau!');};
+    document.getElementById('historyBtn').onclick=function(){alert('Lịch sử sẽ cập nhật sau!');};
+    document.getElementById('undoBtn').onclick=undo;
+    document.getElementById('redoBtn').onclick=redo;
+});
 </script>
 </body>
 </html>
