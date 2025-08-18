@@ -2,21 +2,23 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>ChessPi Nâng Cao</title>
+<title>ChessPi Cờ Tướng Gỗ</title>
 <link rel="stylesheet" href="style.css">
 <script src="pi-login.js" defer></script>
 </head>
 <body>
 <div id="login-container">
-    <h1>ChessPi</h1>
+    <h1>ChessPi Cờ Tướng</h1>
     <button id="loginBtn">Đăng nhập với Pi</button>
 </div>
 
 <div id="main-menu" style="display:none">
     <h2>Chào <span id="username"></span></h2>
     <button id="offlineBtn">Chơi với Máy (AI)</button>
-    <button id="onlineBtn">Chơi Online (Multiplayer)</button>
+    <button id="onlineBtn">Chơi Online</button>
     <button id="historyBtn">Xem Lịch sử</button>
+    <button id="undoBtn">Undo</button>
+    <button id="redoBtn">Redo</button>
 </div>
 
 <div id="game-container" style="display:none;margin-top:20px;">
@@ -25,9 +27,14 @@
 
 <script>
 document.getElementById('loginBtn').onclick=signInWithPi;
-document.getElementById('offlineBtn').onclick=startOffline;
-document.getElementById('onlineBtn').onclick=startOnline;
-document.getElementById('historyBtn').onclick=viewHistory;
+document.getElementById('offlineBtn').onclick=function(){
+    document.getElementById('game-container').style.display='block';
+    initBoard();
+};
+document.getElementById('onlineBtn').onclick=function(){alert('Online sẽ cập nhật sau!')};
+document.getElementById('historyBtn').onclick=function(){alert('Lịch sử sẽ cập nhật sau!')};
+document.getElementById('undoBtn').onclick=undo;
+document.getElementById('redoBtn').onclick=redo;
 </script>
 </body>
 </html>
