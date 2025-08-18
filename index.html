@@ -9,18 +9,25 @@
 <body>
 <div id="login-container">
     <h1>ChessPi</h1>
-    <button onclick="signInWithPi()">Đăng nhập với Pi</button>
+    <button id="loginBtn">Đăng nhập với Pi</button>
 </div>
 
 <div id="main-menu" style="display:none">
     <h2>Chào <span id="username"></span></h2>
-    <button onclick="initBoard();document.getElementById('game-container').style.display='block'">Chơi với Máy (AI)</button>
-    <button onclick="alert('Chức năng Online sẽ được cập nhật sau!')">Chơi Online (Multiplayer)</button>
-    <button onclick="alert('Chức năng Lịch sử sẽ được cập nhật sau!')">Xem Lịch sử</button>
+    <button id="offlineBtn">Chơi với Máy (AI)</button>
+    <button id="onlineBtn">Chơi Online (Multiplayer)</button>
+    <button id="historyBtn">Xem Lịch sử</button>
 </div>
 
 <div id="game-container" style="display:none;margin-top:20px;">
     <table id="chessboard"></table>
 </div>
+
+<script>
+document.getElementById('loginBtn').onclick=signInWithPi;
+document.getElementById('offlineBtn').onclick=startOffline;
+document.getElementById('onlineBtn').onclick=startOnline;
+document.getElementById('historyBtn').onclick=viewHistory;
+</script>
 </body>
 </html>

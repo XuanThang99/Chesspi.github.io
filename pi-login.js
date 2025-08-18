@@ -12,20 +12,44 @@ window.PiSDK = window.PiSDK || {
 async function signInWithPi(){
     try {
         const user = await PiSDK.signIn();
-        document.getElementById("username").textContent = user.username;
-        document.getElementById("login-container").style.display = "none";
-        document.getElementById("main-menu").style.display = "block";
         localStorage.setItem('piUser', JSON.stringify(user));
+        showMainMenu(user);
     } catch(e){
         alert("Đăng nhập thất bại: " + e.message);
     }
 }
 
-// Game cờ vua đơn giản AI random
+function showMainMenu(user){
+    document.getElementById("username").textContent = user.username;
+    document.getElementById("login-container").style.display = "none";
+    document.getElementById("main-menu").style.display = "block";
+}
+
+function startOffline(){
+    document.getElementById('game-container').style.display='block';
+    initBoard();
+}
+
+function startOnline(){
+    alert('Chức năng Online sẽ được cập nhật sau!');
+}
+
+function viewHistory(){
+    alert('Chức năng Lịch sử sẽ được cập nhật sau!');
+}
+
+// Giữ session nếu đã login
+window.addEventListener('load',()=>{
+    const user = JSON.parse(localStorage.getItem('piUser'));
+    if(user) showMainMenu(user);
+});
+
+// Game cờ vua offline
 let board = Array(8).fill().map(()=>Array(8).fill(null));
 let turn = 'w';
 
 function initBoard(){
+    turn='w';
     const pieces = ['r','n','b','q','k','b','n','r'];
     board[0] = pieces.map(p=>'b'+p);
     board[1] = Array(8).fill('bp');
@@ -73,7 +97,6 @@ function cellClick(e){
     }
 }
 
-// AI random đơn giản
 function aiMove(){
     turn = turn==='w'?'b':'w';
     const moves=[];
@@ -96,4 +119,3 @@ function aiMove(){
     }
     turn = turn==='w'?'b':'w';
 }
-
