@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>ChessPi</title>
+<title>ChessPi Nâng Cao</title>
 <link rel="stylesheet" href="style.css">
 <script src="pi-login.js" defer></script>
 </head>
@@ -14,9 +14,13 @@
 
 <div id="main-menu" style="display:none">
     <h2>Chào <span id="username"></span></h2>
-    <button onclick="startOnline()">Chơi Online (Multiplayer)</button>
-    <button onclick="startOffline()">Chơi với Máy (AI)</button>
-    <button onclick="viewHistory()">Xem Lịch sử</button>
+    <button onclick="initBoard();document.getElementById('game-container').style.display='block'">Chơi với Máy (AI)</button>
+    <button onclick="alert('Chức năng Online sẽ được cập nhật sau!')">Chơi Online (Multiplayer)</button>
+    <button onclick="alert('Chức năng Lịch sử sẽ được cập nhật sau!')">Xem Lịch sử</button>
+</div>
+
+<div id="game-container" style="display:none;margin-top:20px;">
+    <table id="chessboard"></table>
 </div>
 </body>
 </html>

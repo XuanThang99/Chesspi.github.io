@@ -1,8 +1,6 @@
-// pi-login.js - nhúng PiSDK trực tiếp
-// Nội dung PiSDK cơ bản (bản minified) để đảm bảo luôn load được
+// Pi login offline demo
 window.PiSDK = window.PiSDK || {
     signIn: async function() {
-        // Demo giả lập login offline, bạn có thể thay bằng PiSDK thật nếu có
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({ username: 'PiUserDemo' });
@@ -23,6 +21,79 @@ async function signInWithPi(){
     }
 }
 
-function startOnline(){ window.location.href = "game.html?mode=online"; }
-function startOffline(){ window.location.href = "game.html?mode=offline"; }
-function viewHistory(){ window.location.href = "history.html"; }
+// Game cờ vua đơn giản AI random
+let board = Array(8).fill().map(()=>Array(8).fill(null));
+let turn = 'w';
+
+function initBoard(){
+    const pieces = ['r','n','b','q','k','b','n','r'];
+    board[0] = pieces.map(p=>'b'+p);
+    board[1] = Array(8).fill('bp');
+    board[6] = Array(8).fill('wp');
+    board[7] = pieces.map(p=>'w'+p);
+    for(let r=2;r<6;r++) board[r]=Array(8).fill(null);
+    renderBoard();
+}
+
+function renderBoard(){
+    const table = document.getElementById('chessboard');
+    table.innerHTML='';
+    for(let r=0;r<8;r++){
+        const tr = document.createElement('tr');
+        for(let c=0;c<8;c++){
+            const td = document.createElement('td');
+            td.textContent = board[r][c]||'';
+            td.dataset.row=r;
+            td.dataset.col=c;
+            td.onclick=cellClick;
+            td.style.width='50px';
+            td.style.height='50px';
+            td.style.textAlign='center';
+            td.style.fontSize='24px';
+            td.style.border='1px solid #333';
+            td.style.backgroundColor=(r+c)%2===0?'#eee':'#aaa';
+            tr.appendChild(td);
+        }
+        table.appendChild(tr);
+    }
+}
+
+let selected=null;
+function cellClick(e){
+    const r=parseInt(e.target.dataset.row);
+    const c=parseInt(e.target.dataset.col);
+    if(selected){
+        board[r][c]=board[selected.r][selected.c];
+        board[selected.r][selected.c]=null;
+        selected=null;
+        renderBoard();
+        aiMove();
+    }else if(board[r][c] && board[r][c][0]===turn){
+        selected={r,c};
+    }
+}
+
+// AI random đơn giản
+function aiMove(){
+    turn = turn==='w'?'b':'w';
+    const moves=[];
+    for(let r=0;r<8;r++){
+        for(let c=0;c<8;c++){
+            if(board[r][c] && board[r][c][0]===turn){
+                for(let i=0;i<8;i++){
+                    for(let j=0;j<8;j++){
+                        if(!board[i][j]) moves.push({from:[r,c],to:[i,j]});
+                    }
+                }
+            }
+        }
+    }
+    if(moves.length){
+        const m=moves[Math.floor(Math.random()*moves.length)];
+        board[m.to[0]][m.to[1]]=board[m.from[0]][m.from[1]];
+        board[m.from[0]][m.from[1]]=null;
+        renderBoard();
+    }
+    turn = turn==='w'?'b':'w';
+}
+
