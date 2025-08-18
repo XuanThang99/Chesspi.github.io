@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>ChessPi Cờ Tướng Gỗ</title>
+<title>ChessPi Cờ Tướng Gỗ CSS</title>
 <link rel="stylesheet" href="style.css">
 <script src="pi-login.js" defer></script>
 </head>
@@ -24,19 +24,5 @@
 <div id="game-container" style="display:none;margin-top:20px;">
     <table id="chessboard"></table>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-    document.getElementById('loginBtn').onclick=signInWithPi;
-    document.getElementById('offlineBtn').onclick=function(){
-        document.getElementById('game-container').style.display='block';
-        initBoard();
-    };
-    document.getElementById('onlineBtn').onclick=function(){alert('Online sẽ cập nhật sau!');};
-    document.getElementById('historyBtn').onclick=function(){alert('Lịch sử sẽ cập nhật sau!');};
-    document.getElementById('undoBtn').onclick=undo;
-    document.getElementById('redoBtn').onclick=redo;
-});
-</script>
 </body>
 </html>

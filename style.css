@@ -2,4 +2,19 @@ body { font-family: Arial, sans-serif; text-align:center; background-color:#f5f5
 button{padding:10px 20px;margin:5px;font-size:16px;border-radius:6px;border:none;cursor:pointer;background-color:#d9534f;color:white;}
 button:hover{background-color:#c9302c;}
 table{margin:0 auto;border-collapse:collapse;}
-td{border:1px solid #333;cursor:pointer;width:60px;height:60px;text-align:center;vertical-align:middle;background-size:cover;}
+td{
+  border:1px solid #333;
+  cursor:pointer;
+  width:60px; height:60px;
+  text-align:center; vertical-align:middle;
+  font-size:30px;
+  font-weight:bold;
+  border-radius:10px;
+  box-shadow:2px 2px 5px rgba(0,0,0,0.5);
+  transition: 0.2s;
+}
+td:hover{
+  transform: scale(1.1);
+}
+td.red{background-color:#f5deb3; color:red;}
+td.black{background-color:#deb887; color:black;}

@@ -11,9 +11,7 @@ async function signInWithPi(){
         const user = await PiSDK.signIn();
         localStorage.setItem('piUser', JSON.stringify(user));
         showMainMenu(user);
-    } catch(e) {
-        alert("Đăng nhập thất bại: "+e.message);
-    }
+    } catch(e) { alert("Đăng nhập thất bại: "+e.message); }
 }
 
 function showMainMenu(user){
@@ -29,22 +27,20 @@ window.addEventListener('load',()=>{
 });
 
 // ------------------- Cờ tướng --------------------
-const emptyRow = Array(9).fill(null);
 let board=[], selected=null, turn='r';
 let history=[], redoStack=[];
-
-// Trọng số quân cờ AI
-const pieceValue = {K:1000,A:2,B:2,R:5,N:5,C:4,P:1};
-
-// Khởi tạo bàn cờ
+const piecesUnicode={
+    rK:'帥', rA:'仕', rB:'相', rR:'俥', rN:'傌', rC:'炮', rP:'兵',
+    bK:'將', bA:'士', bB:'象', bR:'車', bN:'馬', bC:'砲', bP:'卒'
+};
 function initBoard(){
     turn='r'; selected=null; history=[]; redoStack=[];
-    board = [
+    board=[
         ['bR','bN','bB','bA','bK','bA','bB','bN','bR'],
         [null,null,null,null,null,null,null,null,null],
         [null,'bC',null,null,null,null,null,'bC',null],
         ['bP',null,'bP',null,'bP',null,'bP',null,'bP'],
-        emptyRow.slice(), emptyRow.slice(),
+        Array(9).fill(null), Array(9).fill(null),
         ['rP',null,'rP',null,'rP',null,'rP',null,'rP'],
         [null,'rC',null,null,null,null,null,'rC',null],
         [null,null,null,null,null,null,null,null,null],
@@ -61,18 +57,12 @@ function renderBoard(){
         for(let c=0;c<9;c++){
             const td=document.createElement('td');
             const p=board[r][c];
-            if(p){
-                const img = document.createElement('img');
-                img.src=`assets/pieces/${p}.png`;
-                img.style.width='50px'; img.style.height='50px';
-                td.appendChild(img);
+            if(p){ 
+                td.textContent=piecesUnicode[p];
+                td.className=(p[0]==='r')?'red':'black';
             }
             td.dataset.row=r; td.dataset.col=c;
             td.onclick=cellClick;
-            td.style.width='60px'; td.style.height='60px';
-            td.style.border='1px solid #333';
-            td.style.backgroundColor=((r+c)%2===0)?'#f2d9b3':'#b58863';
-            td.className='cell';
             tr.appendChild(td);
         }
         table.appendChild(tr);
@@ -82,11 +72,11 @@ function renderBoard(){
 
 function highlightSelected(){
     document.querySelectorAll('#chessboard td').forEach(td=>{
-        td.style.backgroundColor=((parseInt(td.dataset.row)+parseInt(td.dataset.col))%2===0)?'#f2d9b3':'#b58863';
+        td.style.boxShadow='2px 2px 5px rgba(0,0,0,0.5)';
     });
     if(selected){
         const td=document.querySelector(`#chessboard td[data-row="${selected.r}"][data-col="${selected.c}"]`);
-        if(td) td.style.backgroundColor='yellow';
+        if(td) td.style.boxShadow='0 0 15px yellow';
     }
 }
 
@@ -94,7 +84,6 @@ function cellClick(e){
     const r=parseInt(e.target.dataset.row);
     const c=parseInt(e.target.dataset.col);
     const piece=board[r][c];
-
     if(selected){
         if(!piece || piece[0]!==turn){
             history.push(JSON.parse(JSON.stringify(board)));
@@ -104,17 +93,12 @@ function cellClick(e){
             selected=null;
             renderBoard();
             setTimeout(aiMove,200);
-        }else{
-            selected={r,c};
-            highlightSelected();
-        }
-    }else if(piece && piece[0]===turn){
-        selected={r,c};
-        highlightSelected();
-    }
+        }else{ selected={r,c}; highlightSelected(); }
+    }else if(piece && piece[0]===turn){ selected={r,c}; highlightSelected(); }
 }
 
-// AI thông minh: ăn quân giá trị cao
+// AI đơn giản: ăn quân giá trị cao
+const pieceValue = {K:1000,A:2,B:2,R:5,N:5,C:4,P:1};
 function aiMove(){
     turn='b';
     const moves=[];
@@ -145,6 +129,5 @@ function aiMove(){
     turn='r';
 }
 
-// Undo / Redo
 function undo(){ if(history.length){redoStack.push(JSON.parse(JSON.stringify(board)));board=history.pop();renderBoard();} }
 function redo(){ if(redoStack.length){history.push(JSON.parse(JSON.stringify(board)));board=redoStack.pop();renderBoard();} }
