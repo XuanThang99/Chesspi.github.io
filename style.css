@@ -1,0 +1,6 @@
+body { font-family: sans-serif; text-align: center; background:#f4e1c1; }
+button { padding:10px 20px; margin:10px; font-size:16px; cursor:pointer; }
+#board { margin:auto; border:5px solid #8b5a2b; background:#d2b48c; }
+td { width:50px; height:50px; text-align:center; vertical-align:middle; font-size:24px; }
+.red { color:red; font-weight:bold; }
+.black { color:black; font-weight:bold; }
