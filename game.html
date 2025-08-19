@@ -1,41 +1,51 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>ChessPi</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/pi-sdk/pi-sdk.min.js"></script>
-<script src="pi-login.js"></script>
+  <meta charset="UTF-8">
+  <title>Cờ Tướng Unicode</title>
+  <style>
+    body { font-family: "Arial", "Noto Sans CJK", sans-serif; text-align: center; }
+    table { border-collapse: collapse; margin: auto; }
+    td {
+      width: 50px; height: 50px; text-align: center; vertical-align: middle;
+      font-size: 28px; font-weight: bold; border: 1px solid black;
+    }
+    .red { color: red; }
+    .black { color: black; }
+  </style>
 </head>
 <body>
-<div id="login-container">
-    <h1>ChessPi</h1>
-    <button onclick="signInWithPi()">Đăng nhập với Pi</button>
-</div>
-
-<div id="main-menu" style="display:none">
-    <h2>Chào <span id="username"></span></h2>
-    <button onclick="startOnline()">Chơi Online (Multiplayer)</button>
-    <button onclick="startOffline()">Chơi với Máy (AI)</button>
-    <button onclick="viewHistory()">Xem Lịch sử</button>
-</div>
-
-<script>
-async function signInWithPi(){
-    try {
-        const user = await PiSDK.signIn();
-        document.getElementById("username").textContent = user.username;
-        document.getElementById("login-container").style.display = "none";
-        document.getElementById("main-menu").style.display = "block";
-        localStorage.setItem('piUser', JSON.stringify(user));
-    } catch(e){
-        alert("Đăng nhập thất bại: " + e.message);
-    }
-}
-
-function startOnline(){ window.location.href = "game.html?mode=online"; }
-function startOffline(){ window.location.href = "game.html?mode=offline"; }
-function viewHistory(){ window.location.href = "history.html"; }
-</script>
+  <h1>Cờ Tướng Unicode</h1>
+  <table>
+    <tr>
+      <td class="black">車</td>
+      <td class="black">馬</td>
+      <td class="black">象</td>
+      <td class="black">士</td>
+      <td class="black">將</td>
+      <td class="black">士</td>
+      <td class="black">象</td>
+      <td class="black">馬</td>
+      <td class="black">車</td>
+    </tr>
+    <tr><td colspan="9"></td></tr>
+    <tr><td class="black">砲</td><td colspan="7"></td><td class="black">砲</td></tr>
+    <tr><td class="black">卒</td><td></td><td class="black">卒</td><td></td><td class="black">卒</td><td></td><td class="black">卒</td><td></td><td class="black">卒</td></tr>
+    <tr><td colspan="9"></td></tr>
+    <tr><td class="red">兵</td><td></td><td class="red">兵</td><td></td><td class="red">兵</td><td></td><td class="red">兵</td><td></td><td class="red">兵</td></tr>
+    <tr><td class="red">炮</td><td colspan="7"></td><td class="red">炮</td></tr>
+    <tr><td colspan="9"></td></tr>
+    <tr>
+      <td class="red">車</td>
+      <td class="red">馬</td>
+      <td class="red">相</td>
+      <td class="red">仕</td>
+      <td class="red">帥</td>
+      <td class="red">仕</td>
+      <td class="red">相</td>
+      <td class="red">馬</td>
+      <td class="red">車</td>
+    </tr>
+  </table>
 </body>
 </html>
